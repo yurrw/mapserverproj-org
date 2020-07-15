@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapcache>
+    <cache name="disk" type="disk">
+        <base>/etc/mapserver/tmp</base>
+        <symlink_blank/>
+    </cache>
+
+    <source name="t0" type="wms">
+        <getmap>
+            <params>
+                <FORMAT>image/png</FORMAT>
+                <LAYERS>t0_23,t0_24</LAYERS>
+                <MAP>/etc/mapserver/mapfile_t0.map</MAP>
+            </params>
+        </getmap>
+        <http>
+            <url>http://172.19.0.2/cgi-bin/mapserv</url>
+        </http>
+    </source>
+
+    <source name="t1" type="wms">
+        <getmap>
+            <params>
+                <FORMAT>image/png</FORMAT>
+                <LAYERS>t1_23,t1_24</LAYERS>
+                <MAP>/etc/mapserver/mapfile_t1.map</MAP>
+            </params>
+        </getmap>
+        <http>
+            <url>http://172.19.0.2/cgi-bin/mapserv</url>
+        </http>
+    </source>
+
+    <source name="t2" type="wms">
+        <getmap>
+            <params>
+                <FORMAT>image/png</FORMAT>
+                <LAYERS>t2_23,t2_24</LAYERS>
+                <MAP>/etc/mapserver/mapfile_t2.map</MAP>
+            </params>
+        </getmap>
+        <http>
+            <url>http://172.19.0.2/cgi-bin/mapserv</url>
+        </http>
+    </source>
+
+    <tileset name="tileset_t0">
+        <source>t0</source>
+        <cache>disk</cache>
+        <grid>WGS84</grid>
+        <format>PNG</format>
+        <expires>3600</expires>
+        <auto_expires>2592000</auto_expires> <!-- 1 mes -->
+    </tileset>
+
+    <tileset name="tileset_t1">
+        <source>t1</source>
+        <cache>disk</cache>
+        <grid>WGS84</grid>
+        <format>PNG</format>
+        <expires>3600</expires>
+        <auto_expires>2592000</auto_expires> <!-- 1 mes -->
+    </tileset>
+
+    <tileset name="tileset_t2">
+        <source>t2</source>
+        <cache>disk</cache>
+        <grid>WGS84</grid>
+        <format>PNG</format>
+        <expires>3600</expires>
+        <auto_expires>2592000</auto_expires> <!-- 1 mes -->
+    </tileset>
+
+    <default_format>PNG</default_format>
+
+    <service type="wms" enabled="true">
+        <full_wms>assemble</full_wms>
+        <resample_mode>bilinear</resample_mode>
+        <format>PNG</format>
+    </service>
+
+    <errors>report</errors>
+
+    <locker type="disk">
+        <directory>/etc/mapserver/tmp</directory>
+        <retry>0.01</retry>
+        <timeout>60</timeout>
+    </locker>
+</mapcache>
